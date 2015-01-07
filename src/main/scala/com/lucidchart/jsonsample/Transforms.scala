@@ -49,7 +49,7 @@ object Transforms {
     ((__ \ 'name).json.pickBranch orElse (__ \ 'name).json.copyFrom(for(firstName <- (__ \ 'first_name).read[String]; lastName <- (__ \ 'last_name).read[String]) yield {
       JsString(s"$firstName $lastName")
     })) and
-    (__ \ 'email).json.pickBranch(Reads.email.map(JsString)) and//(Reads.email)
+    (__ \ 'email).json.pickBranch(Reads.email.map(JsString)) and
     (__ \ 'phone).json.copyFrom((__ \ 'phone_number).read(Reads.pattern(new Regex("\\d{10}")).map { s =>
       JsString("(%s)-%s-%s".format(s.substring(0, 3), s.substring(3,6), s.substring(6)))
     })) and
